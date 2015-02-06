@@ -1,0 +1,142 @@
+# depslib dependency file v1.0
+1423193586 source:c:\users\asus\documents\opencv projects\grandproject\grandproject\main.cpp
+	<tchar.h>
+	<windows.h>
+	<string>
+	"WinProc.h"
+	"Resource.h"
+	"Funcs.h"
+	"Features.h"
+
+1391486225 c:\opencv\build\include\opencv2\core\core.hpp
+	"opencv2/core/types_c.h"
+	"opencv2/core/version.hpp"
+	<limits.h>
+	<algorithm>
+	<cmath>
+	<cstddef>
+	<complex>
+	<map>
+	<new>
+	<string>
+	<vector>
+	<sstream>
+	"opencv2/core/operations.hpp"
+	"opencv2/core/mat.hpp"
+
+1392697221 c:\opencv\build\include\opencv2\core\types_c.h
+	<assert.h>
+	<stdlib.h>
+	<string.h>
+	<float.h>
+	<stdint.h>
+	<intrin.h>
+	<emmintrin.h>
+	<fastmath.h>
+	<math.h>
+	<ipl.h>
+	<ipl/ipl.h>
+	"tegra_round.hpp"
+	"emmintrin.h"
+
+1396407957 c:\opencv\build\include\opencv2\core\version.hpp
+
+1387532997 c:\opencv\build\include\opencv2\core\operations.hpp
+	<string.h>
+	<limits.h>
+	<ext/atomicity.h>
+	<bits/atomicity.h>
+	<limits>
+
+1389322856 c:\opencv\build\include\opencv2\core\mat.hpp
+	<limits.h>
+	<string.h>
+
+1423194128 c:\users\asus\documents\opencv projects\grandproject\grandproject\winproc.h
+	<CommDlg.h>
+	<winuser.h>
+	<iostream>
+	<string>
+	"Funcs.h"
+	"Resource.h"
+	"Features.h"
+	"Classifiers.h"
+
+1422927590 source:c:\users\asus\documents\opencv projects\grandproject\grandproject\resource.rc
+	<windows.h>
+	<afxres.h>
+	<winuser.h>
+	"Resource.h"
+
+1422928348 c:\users\asus\documents\opencv projects\grandproject\grandproject\resource.h
+	<windows.h>
+
+1423193586 c:\users\asus\documents\opencv projects\grandproject\grandproject\funcs.h
+	<windows.h>
+	<windowsx.h>
+	<shlobj.h>
+	"Shlwapi.h"
+	"Resource.h"
+	<iostream>
+	<string>
+	<dirent.h>
+	<cstring>
+	<fstream>
+	<vector>
+	<sstream>
+	<iomanip>
+
+1387532997 c:\opencv\build\include\opencv2\highgui\highgui.hpp
+	"opencv2/core/core.hpp"
+	"opencv2/highgui/highgui_c.h"
+
+1395716431 c:\opencv\build\include\opencv2\highgui\highgui_c.h
+	"opencv2/core/core_c.h"
+
+1393995733 c:\opencv\build\include\opencv2\core\core_c.h
+	"opencv2/core/types_c.h"
+
+1421131373 c:\users\asus\documents\opencv projects\grandproject\grandproject\resource.rc
+	<windows.h>
+	<afxres.h>
+	<winuser.h>
+	"Resource.h"
+
+1423188474 c:\users\asus\documents\opencv projects\grandproject\grandproject\features.h
+	<windows.h>
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<opencv2/nonfree/features2d.hpp>
+	<opencv2/ml/ml.hpp>
+	<iostream>
+	<vector>
+	"Funcs.h"
+
+1387532998 c:\opencv\build\include\opencv2\nonfree\features2d.hpp
+	"opencv2/features2d/features2d.hpp"
+
+1393995733 c:\opencv\build\include\opencv2\features2d\features2d.hpp
+	"opencv2/core/core.hpp"
+	"opencv2/flann/miniflann.hpp"
+	<limits>
+
+1387532997 c:\opencv\build\include\opencv2\flann\miniflann.hpp
+	"opencv2/core/core.hpp"
+	"opencv2/flann/defines.h"
+
+1387532997 c:\opencv\build\include\opencv2\flann\defines.h
+	"config.h"
+
+1387532997 c:\opencv\build\include\opencv2\flann\config.h
+
+1423206888 c:\users\asus\documents\opencv projects\grandproject\grandproject\classifiers.h
+	"Features.h"
+	"Funcs.h"
+
+1387532998 c:\opencv\build\include\opencv2\ml\ml.hpp
+	"opencv2/core/core.hpp"
+	<limits.h>
+	<map>
+	<string>
+	<iostream>
+
