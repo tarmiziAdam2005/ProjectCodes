@@ -1,4 +1,5 @@
 // Created by Tarmizi Adam on 12/2/2015
+// Updated: 14/3/2015
 // This program Compute the confusion matrix and recognition rate between two vectors.
 // The first vector is the expected labels. the second label is the output from a classifier i.e. SVM or Neural
 // Network.
@@ -50,7 +51,7 @@ int main()
         return 1;
     }
 
-    vector<int> classCount;
+   // vector<int> classCount;
     typedef vector<double> Col;
     typedef vector<Col> Matrix;
 
@@ -80,7 +81,8 @@ int main()
     {
         for(size_t col = 0; col < classes.size(); col++)
         {
-          out << (confMatrix[row][col]/numberOfClass[col])*100 << ",";
+          //out << confMatrix[row][col] << ","; // Number of classification counts. Not in percentage %
+          out << (confMatrix[row][col]/numberOfClass[row])*100 << ","; // Recog rate in %
         }
         out << endl;
     }
@@ -94,16 +96,21 @@ int main()
         {
           if(row == col)
           {
-              val = val + confMatrix[row][col]; // sum all the diagonal
+              val = val + (confMatrix[row][col]/numberOfClass[row])*100;
           }
         }
     }
 
+    cout << val << endl;
+    cout << classes.size();
     cout << "Recognition: " << val/classes.size() << "%" << endl;
     out << "Recognition: " << val/classes.size() << "%" << endl;
     cout << endl;
 
+    for(size_t col = 0; col < classes.size(); col++)
+        {
+          cout << numberOfClass[col] << ",";
+        }
+
     return 0;
 }
-
-
