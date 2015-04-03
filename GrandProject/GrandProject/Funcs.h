@@ -21,6 +21,9 @@
 #include <vector>
 #include <sstream>
 #include <iomanip>
+#include <iterator>
+#include <algorithm>
+#include <cmath>
 
 using std::cout;
 using std::endl;
@@ -30,6 +33,8 @@ using std::vector;
 using std::stringstream;
 using std::ostringstream;
 using std::ifstream;
+using std::iterator;
+
 
 
 static OPENFILENAME ofn;
@@ -322,7 +327,7 @@ void renameImageFiles(HWND hwnd, string dirPath)
     for(size_t i = 0; i < images.size(); i++)
     {
         string newImgName(buffer);
-        ss << newImgName << std::setfill('0') << std::setw(10 - newImgName.length()) << iter << ".png";
+        ss << newImgName << std::setfill('0') << std::setw(10 - newImgName.length()) << iter << ".jpg";
 
         string savePath(pth);
 

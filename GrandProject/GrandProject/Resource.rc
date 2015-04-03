@@ -19,8 +19,15 @@ FONT 8, "MS Sans Serif"
        DEFPUSHBUTTON    "&OK", ID_OK, 35, 40, 50, 14
     END
 
-
-
+IDD_SVM_OPTION DIALOG DISCARDABLE 0, 0, 150, 150
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Svm Option..."
+FONT 8, "MS Sans Serif"
+    {
+        GROUPBOX "Kernels...", IDC_STATIC, 6,6, 130, 130
+        RADIOBUTTON "RBF", IDR_SVM_RBF, 15, 25, 40, 10, BS_RADIOBUTTON |WS_GROUP
+        RADIOBUTTON "Polynomial", IDR_SVM_POLY, 15, 35, 40, 10, BS_RADIOBUTTON
+    }
 
 
 IDD_IMG_NAME DIALOG DISCARDABLE 0, 0, 150, 66
@@ -31,6 +38,16 @@ FONT 8, "MS Sans Serif"
        LTEXT            "Enter new name for image: Image files will be renamed.", IDC_STATIC, 20, 10, 100, 100
        EDITTEXT         IDT_IMG_ONE, 50 , 30, 40, 15
        DEFPUSHBUTTON    "&Rename", ID_IMG_OK, 35, 50, 50, 14
+    END
+
+IDD_FILE_NAME DIALOG DISCARDABLE 0, 0, 150, 66
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Type in file name"
+FONT 8, "MS Sans Serif"
+    BEGIN
+       LTEXT            "Enter file name.", IDC_STATIC, 20, 10, 100, 100
+       EDITTEXT         IDT_FILE_NAME, 50 , 30, 40, 15
+       DEFPUSHBUTTON    "&OK", ID_FILE_NAME_OK, 35, 50, 50, 14
     END
 
 

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1423193586 source:c:\users\asus\documents\opencv projects\grandproject\grandproject\main.cpp
+1428045440 source:c:\users\asus\documents\opencv projects\grandproject\grandproject\main.cpp
 	<tchar.h>
 	<windows.h>
 	<string>
@@ -52,7 +52,7 @@
 	<limits.h>
 	<string.h>
 
-1423194128 c:\users\asus\documents\opencv projects\grandproject\grandproject\winproc.h
+1427962371 c:\users\asus\documents\opencv projects\grandproject\grandproject\winproc.h
 	<CommDlg.h>
 	<winuser.h>
 	<iostream>
@@ -62,16 +62,16 @@
 	"Features.h"
 	"Classifiers.h"
 
-1422927590 source:c:\users\asus\documents\opencv projects\grandproject\grandproject\resource.rc
+1427961622 source:c:\users\asus\documents\opencv projects\grandproject\grandproject\resource.rc
 	<windows.h>
 	<afxres.h>
 	<winuser.h>
 	"Resource.h"
 
-1422928348 c:\users\asus\documents\opencv projects\grandproject\grandproject\resource.h
+1427960778 c:\users\asus\documents\opencv projects\grandproject\grandproject\resource.h
 	<windows.h>
 
-1423193586 c:\users\asus\documents\opencv projects\grandproject\grandproject\funcs.h
+1426148780 c:\users\asus\documents\opencv projects\grandproject\grandproject\funcs.h
 	<windows.h>
 	<windowsx.h>
 	<shlobj.h>
@@ -85,6 +85,9 @@
 	<vector>
 	<sstream>
 	<iomanip>
+	<iterator>
+	<algorithm>
+	<cmath>
 
 1387532997 c:\opencv\build\include\opencv2\highgui\highgui.hpp
 	"opencv2/core/core.hpp"
@@ -102,12 +105,14 @@
 	<winuser.h>
 	"Resource.h"
 
-1423188474 c:\users\asus\documents\opencv projects\grandproject\grandproject\features.h
+1428045990 c:\users\asus\documents\opencv projects\grandproject\grandproject\features.h
 	<windows.h>
 	<opencv2/core/core.hpp>
 	<opencv2/highgui/highgui.hpp>
 	<opencv2/nonfree/features2d.hpp>
 	<opencv2/ml/ml.hpp>
+	<opencv2/objdetect/objdetect.hpp>
+	<opencv2/imgproc/imgproc.hpp>
 	<iostream>
 	<vector>
 	"Funcs.h"
@@ -129,7 +134,7 @@
 
 1387532997 c:\opencv\build\include\opencv2\flann\config.h
 
-1423206888 c:\users\asus\documents\opencv projects\grandproject\grandproject\classifiers.h
+1427854283 c:\users\asus\documents\opencv projects\grandproject\grandproject\classifiers.h
 	"Features.h"
 	"Funcs.h"
 
@@ -139,4 +144,16 @@
 	<map>
 	<string>
 	<iostream>
+
+1387532998 c:\opencv\build\include\opencv2\objdetect\objdetect.hpp
+	"opencv2/core/core.hpp"
+	<map>
+	<deque>
+
+1387532998 c:\opencv\build\include\opencv2\imgproc\imgproc.hpp
+	"opencv2/core/core.hpp"
+	"opencv2/imgproc/types_c.h"
+
+1387532998 c:\opencv\build\include\opencv2\imgproc\types_c.h
+	"opencv2/core/core_c.h"
 

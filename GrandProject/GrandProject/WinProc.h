@@ -18,6 +18,7 @@
 #include "Features.h"
 #include "Classifiers.h"
 
+
 using std::cout;
 using std::endl;
 using std::string;
@@ -57,6 +58,12 @@ BOOL CALLBACK ClassDlgProcedure(HWND hwnd, UINT Message, WPARAM wParam, LPARAM l
                     renameImageFiles(hwnd, dirPath);
                     EndDialog(hwnd, ID_IMG_OK);
                     break;
+
+                case ID_FILE_NAME_OK:
+                    HOG_IO(hwnd);
+                    EndDialog(hwnd,ID_FILE_NAME_OK);
+                    break;
+
 
 
             }
@@ -125,6 +132,8 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                                         if(comboIndex == 0)
                                         {
                                            MessageBox(hwnd,listName, "You chose", MB_OK);
+                                           DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_FILE_NAME),hwnd,ClassDlgProcedure);
+
                                         }
 
                                         if(comboIndex == 1)
@@ -137,6 +146,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                                         if(comboIndex == 2)
                                         {
                                             MessageBox(hwnd,listName, "You chose", MB_OK);
+
                                         }
 
                                   }

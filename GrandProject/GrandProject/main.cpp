@@ -7,6 +7,10 @@
     #define UNICODE
 #endif
 
+#define tic      double tic_t = clock();
+#define toc      std::cout << (clock() - tic_t)/CLOCKS_PER_SEC \
+                           << " seconds" << std::endl;
+
 #include <tchar.h>
 #include <windows.h>
 
@@ -35,12 +39,16 @@ string browseFolder(HWND hwnd);
 void renameImageFiles(HWND hwnd, string dirPath, int len);
 void DIC_SIFT(HWND hwnd);
 void DESCRIPTOR_SIFT(HWND hwnd);
+void HOG_IO(HWND hwnd);
+void extractHog(Mat &img_raw,vector< vector<float> > &v_descriptorValues, vector< vector<Point> > &v_locations);
 void classifier_SVM_Train(HWND hwnd);
+//void classifier_SVM_Train(HWND hwnd, DLGPROC ClassDlgProcedure);
 void classifier_SVM_Test(HWND hwnd);
 string selectXmlFileTrain(HWND hwnd);
 string selectXmlFileTest(HWND hwnd);
 string selectTxtFile(HWND hwnd);
 string selectSvmFile(HWND hwnd);
+void comput_Recognition_Rate(HWND hwnd, string path);
 
 /*  Make the class name into a global variable  */
 TCHAR szClassName[ ] = _T("Classification Project");
@@ -81,11 +89,11 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
            0,                   /* Extended possibilites for variation */
            szClassName,         /* Classname */
            _T("Classification Project"),       /* Title Text */
-           WS_OVERLAPPEDWINDOW, /* default window */
+           (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZE |WS_MAXIMIZE), /* default window */
            CW_USEDEFAULT,       /* Windows decides the position */
            CW_USEDEFAULT,       /* where the window ends up on the screen */
-           544,                 /* The programs width */
-           375,                 /* and height in pixels */
+           800,                 /* The programs width */
+           600,                 /* and height in pixels */
            HWND_DESKTOP,        /* The window is a child-window to desktop */
            NULL,                /* No menu */
            hThisInstance,       /* Program Instance handler */

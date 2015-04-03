@@ -9,6 +9,8 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/nonfree/features2d.hpp>
 #include <opencv2/ml/ml.hpp>
+#include <opencv2/objdetect/objdetect.hpp> // This is needed for HOGDescriptor
+#include <opencv2/imgproc/imgproc.hpp>
 
 // Standard C/C++ headers...
 #include <iostream>
@@ -29,11 +31,11 @@ void DIC_SIFT(HWND hwnd)
 
     // Check if the file is already created, abort this function.
 
-    FileStorage checkFile("train_CMU.xml", FileStorage::READ);
+    FileStorage checkFile("Dictionary.xml", FileStorage::READ);
 
     if(checkFile.isOpened() ==  true)
     {
-        cout << "Train_CMU.xml already created" << endl;
+        cout << "Dictionary.xml already created" << endl;
         return;
     }
     else
@@ -55,7 +57,7 @@ void DIC_SIFT(HWND hwnd)
 
         TCHAR pth[MAX_PATH];
         brwsFol.hwndOwner = hwnd;
-        brwsFol.lpszTitle = ("Browse for location of the images...");
+        brwsFol.lpszTitle = ("Location of images to create dictionary...");
         brwsFol.ulFlags = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
         LPITEMIDLIST pidl = SHBrowseForFolder(&brwsFol);
 
@@ -116,7 +118,7 @@ void DIC_SIFT(HWND hwnd)
 
         //Construct BOW k-means trainer
         // the number of bags
-        int dictionarySize = 200;
+        int dictionarySize = 1024;
 
         //define term criteria
         TermCriteria tc(CV_TERMCRIT_ITER, 100, 0.001);
@@ -134,7 +136,7 @@ void DIC_SIFT(HWND hwnd)
         Mat dictionary = bowTrainer.cluster(featuresUnclustered);
 
         //store the vocabulary
-        FileStorage fs("train_CMU.xml", FileStorage::WRITE);
+        FileStorage fs("Dictionary.xml", FileStorage::WRITE);
         fs << "Vocabulary" << dictionary;
         fs.release();
 
@@ -154,7 +156,7 @@ void DESCRIPTOR_SIFT(HWND hwnd)
 
     //prepare BOW descriptor extractor from the dictionary
     Mat dictionary;
-    FileStorage fs("train_CMU.xml", FileStorage::READ);
+    FileStorage fs("Dictionary.xml", FileStorage::READ);
     fs["Vocabulary"] >> dictionary;
     fs.release();
 
@@ -175,7 +177,7 @@ void DESCRIPTOR_SIFT(HWND hwnd)
 
     TCHAR pth[MAX_PATH];
     brwsFol.hwndOwner = hwnd;
-    brwsFol.lpszTitle = ("Browse image to test...");
+    brwsFol.lpszTitle = ("Browse image to extract features...");
     brwsFol.ulFlags = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
     LPITEMIDLIST pidl = SHBrowseForFolder(&brwsFol);
 
@@ -243,7 +245,7 @@ void DESCRIPTOR_SIFT(HWND hwnd)
     }
 
      //open the file to write the resultant descriptor
-    FileStorage fs1("test.xml", FileStorage::WRITE);
+    FileStorage fs1("Features_test.xml", FileStorage::WRITE);
 
     //write the new BOF descriptor to the file
     fs1 << "Vocabulary" << bowTry;
@@ -253,5 +255,134 @@ void DESCRIPTOR_SIFT(HWND hwnd)
     fs1.release();
 
 }
+
+void extractHog(Mat &img_raw,vector< vector<float> > &v_descriptorValues, vector< vector<Point> > &v_locations)
+{
+    Mat img;
+    cv::resize(img_raw,img_raw,Size(64,128));
+
+    cvtColor(img_raw,img,CV_RGB2GRAY);
+
+    HOGDescriptor d;
+
+    vector<float> descriptorsValues;
+    //Mat descriptorsValues;
+    vector<Point> locations;
+    d.compute(img,descriptorsValues,Size(0,0),Size(0,0),locations);
+
+    v_descriptorValues.push_back(descriptorsValues);
+    v_locations.push_back(locations);
+
+}
+
+void HOG_IO(HWND hwnd)
+{
+
+    int len = GetWindowTextLength(GetDlgItem(hwnd,IDT_FILE_NAME));
+    char *buffer = (char*)GlobalAlloc(GPTR, len + 1);
+    GetDlgItemText(hwnd, IDT_FILE_NAME, buffer, len + 1);
+
+    string file(buffer);
+
+    TCHAR pth[MAX_PATH];
+    brwsFol.hwndOwner = hwnd;
+    brwsFol.lpszTitle = ("Location of images to create dictionary...");
+    brwsFol.ulFlags = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
+    LPITEMIDLIST pidl = SHBrowseForFolder(&brwsFol);
+
+    if(pidl != 0)
+    {
+        SHGetPathFromIDList(pidl,pth);
+
+    }
+
+    FileStorage fs(file + ".xml", FileStorage::WRITE); //File to output the HOG vectors.
+
+    DIR *pDir = nullptr; // Directory pointer
+
+    string imgDir(pth);
+    imgDir = imgDir + "\\";
+    string imgPath;
+
+    pDir = opendir(imgDir.c_str());
+
+    string dirName;
+    //cout << imgDir << endl;
+
+    Mat img_raw; // Our loaded image.
+
+    vector< vector<float> > v_descriptorValues; // Store are descriptor values (3780 HoG values per image)
+    vector< vector<Point> > v_locations;
+
+    struct dirent *pent = nullptr; // dirent structure for directory manipulation.
+
+    if(pDir == nullptr)
+    {
+        MessageBox(hwnd,"Directory pointer could not be initialized correctly !", "Error", MB_OK | MB_ICONERROR);
+        cout << "Directory pointer could not be initialized correctly ! " << endl; // Some checking.
+        return;
+    }
+
+    int count = 0;
+
+    cout << "Please WAIT..." << endl;
+
+    while((pent = readdir(pDir)) != nullptr)
+    {
+        if(pent == nullptr)
+        {
+            MessageBox(hwnd,"Dirent struct could not be initialized correctly !", "Error", MB_OK | MB_ICONERROR);
+            cout << "Dirent struct could not be initialized correctly !" << endl;
+            return;
+        }
+        if(!strcmp(pent->d_name,".")||!strcmp(pent->d_name,".."))
+        {
+
+        }
+        else
+        {
+            dirName = pent->d_name;
+            imgPath = imgDir+dirName; // Overall image path... feed this to imread();
+            img_raw = imread(imgPath,1);// read the image to extract HOG features
+            extractHog(img_raw,v_descriptorValues,v_locations); // Extract HOG of image.
+            count++;
+
+        }
+
+
+    }
+
+    cout << "*****************Our HOG Statistics******************" << endl;
+    cout << "Number of files in folder: " << count << endl;
+    cout << "Extracting. Please Wait...";
+    cout << "Extraction complete.";
+    cout << endl;
+    cout << endl;
+
+    int row = v_descriptorValues.size();
+    int col = v_descriptorValues[0].size();
+
+    cout << "Rows: " << row << endl;
+    cout << "Columns: " << col << endl;
+    cout << "******************************************************" << endl;
+
+    Mat M(row, col, CV_32F); // OpenCV mat to store our HoG values
+
+    // Copy our HoG values to the openCV mat.
+    // 2D vector to openCV Mat conversion. Credit to: http://feelmare.blogspot.com/2014/04/example-source-code-of-extract-hog.html
+    for(int i = 0; i < row; i++)
+    {
+        memcpy(&(M.data[col*i*sizeof(float)]),v_descriptorValues[i].data(),col*sizeof(float));
+    }
+
+    //Write to our .xml file !
+    fs << "Vocuabulary" << M;
+
+    fs.release();
+    closedir(pDir);
+
+}
+
+
 
 #endif // FEATURES_H
